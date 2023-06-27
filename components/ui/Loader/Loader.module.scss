@@ -1,0 +1,21 @@
+@import '/styles/variables';
+@import '/styles/functions';
+@import '/styles/mixins';
+@import '/styles//animations';
+
+.background {
+  @include position();
+  background-color: rgba($light-grey, 0.3);
+
+  .loader {
+    width: px(200);
+    position: fixed;
+    left: calc(50% - px(100));
+    top: calc(50vh - px(100));
+    animation: rotate 1.5s infinite linear;
+
+    & path {
+      fill: $main;
+    }
+  }
+}

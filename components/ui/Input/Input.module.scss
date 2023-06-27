@@ -1,0 +1,29 @@
+@import '/styles/variables';
+@import '/styles/functions';
+
+.input {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: px(8);
+
+  label {
+    font-size: 12px;
+    font-style: italic;
+    color: $dark-grey;
+    padding-bottom: px(4);
+  }
+
+  input {
+    width: 100%;
+    font-size: px(14);
+    padding: px(8) px(12);
+    border: 1px solid $dark-grey;
+    border-radius: $border-radius;
+
+    &::placeholder {
+      font-style: italic;
+      color: $light-grey;
+    }
+  }
+}

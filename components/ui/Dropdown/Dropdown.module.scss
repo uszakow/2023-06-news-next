@@ -1,0 +1,35 @@
+@import '/styles/variables';
+@import '/styles/functions';
+
+.dropdown {
+  cursor: pointer;
+
+  &-content {
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    z-index: $z-regular;
+    display: flex;
+    flex-direction: column;
+
+    .simple & {
+      right: px(-16);
+      min-width: px(180);
+      background-color: $background;
+      border: 1px solid $light-grey;
+      border-radius: $border-radius;
+    }
+
+    >* {
+      cursor: pointer;
+      display: block;
+      font-size: px(18);
+      text-align: left;
+      padding: px(4);
+    }
+
+    >*:not(:last-child) {
+      border-bottom: 1px solid $light-grey;
+    }
+  }
+}

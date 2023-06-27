@@ -1,0 +1,84 @@
+@import '/styles/variables';
+@import '/styles/functions';
+@import '/styles//animations';
+
+.button {
+  cursor: pointer;
+}
+
+.primary,
+.secondary,
+.danger {
+  width: px(176);
+  min-height: px(32);
+  font-size: px(14);
+  border-radius: $border-radius;
+
+  .loader {
+    width: px(24);
+  }
+}
+
+.primary,
+.secondary,
+.danger,
+.inline {
+  text-transform: uppercase;
+}
+
+.primary,
+.danger {
+  color: $white;
+  border: none;
+  box-shadow: inset 0px 5px 10px 0px rgba($white, 0.5),
+    0 4px 10px 0 rgba($black, 0.5);
+  transition: box-shadow 0.2s ease-in-out;
+
+  .loader path {
+    fill: $white;
+  }
+
+  &:active {
+    box-shadow: inset 0px 10px 20px 2px rgba($white, 0.25), 0px 2px 5px 0 rgba($black, 0.5);
+  }
+}
+
+.primary {
+  background-color: $main;
+}
+
+.danger {
+  background-color: $error;
+}
+
+.secondary {
+  color: $main;
+  background-color: $white;
+  border: 2px solid $main;
+  box-shadow: inset 0px 5px 10px 0px rgba($black, 0.2),
+    0 4px 10px 0 rgba($black, 0.5);
+  transition: box-shadow 0.2s ease-in-out;
+
+  .loader path {
+    fill: $main;
+  }
+
+  &:active {
+    box-shadow: inset 0px 10px 20px 2px rgba($black, 0.1), 0px 2px 5px 0 rgba($black, 0.5);
+  }
+}
+
+.inline {
+  font-size: px(16);
+  color: $main;
+  text-decoration: underline;
+  text-underline-offset: px(4);
+
+  &:hover {
+    color: $error;
+  }
+}
+
+.loader {
+  animation: rotate 1.5s infinite linear;
+}
