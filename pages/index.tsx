@@ -1,3 +1,4 @@
+import { NewsAdd } from "@/components/NewsAdd/NewsAdd";
 import Head from "next/head";
 import React from "react";
 
@@ -8,6 +9,7 @@ const ListsPage: React.FC = () => {
         <title>Wiadomości</title>
       </Head>
       <div>Lists page</div>
+      <NewsAdd />
     </>
   );
 };

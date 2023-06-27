@@ -79,6 +79,31 @@
   }
 }
 
+.adding {
+  font-size: px(22);
+  color: $main;
+
+  .plus {
+    width: px(24);
+    height: px(24);
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      top: px(12);
+      left: 0;
+      width: px(24);
+      height: px(2);
+      background-color: $main;
+    }
+
+    &::before {
+      transform: rotate(90deg);
+    }
+  }
+}
+
 .loader {
   animation: rotate 1.5s infinite linear;
 }

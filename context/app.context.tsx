@@ -1,12 +1,12 @@
 import { api } from "@/config";
-import { UserSummaryInterface } from "@/types/UserSummary.interface";
+import { UserInterface } from "@/types/User.interface";
 import { PropsWithChildren, createContext, useState } from "react";
 
 interface AppContextProps {
   isLoading: boolean;
   setIsLoading: (state: boolean) => void;
   token: string | null;
-  user: UserSummaryInterface | null;
+  user: UserInterface | null;
   setUser: () => void;
 }
 

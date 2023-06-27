@@ -70,7 +70,7 @@ export const ProfileDataChange: React.FC = () => {
 
       setUser();
       closeModal();
-    } catch (error: any) {
+    } catch (error) {
       const errorMessage = getErrorMessage(error, "Nie udało się zmienić nazwy użytkownika");
       setError(errorMessage);
     } finally {
@@ -134,14 +134,14 @@ export const ProfileDataChange: React.FC = () => {
         return (
           <>
             <Input
-              type='password'
+              type="password"
               value={password}
               label="Nowe hasło użytkownika"
               placeholder="Wprowadź hasło użytkownika"
               onChange={setPassword}
             />
             <Input
-              type='password'
+              type="password"
               value={passwordConfirmation}
               label="Potwierdzenie hasła użytkownika"
               placeholder="Wprowadź hasło użytkownika jeszcze raz"
@@ -162,7 +162,7 @@ export const ProfileDataChange: React.FC = () => {
             <Typography type='text'>Tej akcji nie da się odwrócić! Jeżeli nie chcesz tego robić, po prostu zamknij to okno.</Typography>
             <Button
               className="mt-2 m-auto"
-              type='danger'
+              type="danger"
               label="Usuń konto"
               onClick={() => deleteUser()}
             />
