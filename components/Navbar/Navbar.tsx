@@ -5,11 +5,11 @@ import { Dropdown } from "@ui/Dropdown/Dropdown";
 import { AppContext } from "@/context/app.context";
 
 export const Navbar: React.FC = () => {
-  const { user, setUser } = useContext(AppContext);
+  const { user, setUserContext } = useContext(AppContext);
 
   const logout = () => {
     localStorage.removeItem('token');
-    setUser();
+    setUserContext();
   };
 
   return (

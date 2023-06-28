@@ -1,0 +1,15 @@
+@import '/styles/variables';
+@import '/styles/mixins';
+
+.news-preview {
+  border: 2px solid $main;
+  border-radius: $border-radius;
+
+  &-title {
+    @include text-one-line;
+  }
+
+  &-content {
+    @include text-ellipsis();
+  }
+}

@@ -1,17 +1,36 @@
 import Head from "next/head";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AppContext } from "@/context/app.context";
 import { showNewsCount } from "@/helpers/pipes";
 import { ProfileDataChange } from "@/components/ProfileDataChange/ProfileDataChange";
 import { Button } from "@/components/ui/Button/Button";
 import { Typography } from "@/components/ui/Typography/Typography";
+import { fetchUser } from "@/api/fetchUser";
+import { UserInterface } from "@/types/User.interface";
 
 const ProfilePage: React.FC = () => {
-  const { user, setUser } = useContext(AppContext);
+  const { token, setUserContext, setIsLoading } = useContext(AppContext);
+  const [user, setUser] = useState<UserInterface | null>(null);
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    if (token) {
+      const getUserFromApi = async () => {
+        try {
+          const user = await fetchUser(token);
+          setUser(user);
+        } catch (error) { }
+      };
+      getUserFromApi();
+    }
+    
+    setIsLoading(false);
+  }, []);
 
   const logout = () => {
     localStorage.removeItem('token');
-    setUser();
+    setUserContext();
   };
 
   return (

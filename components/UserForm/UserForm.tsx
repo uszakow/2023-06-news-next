@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { Typography } from "@ui/Typography/Typography";
 import { Input } from "@ui/Input/Input";
 import { Button } from "@ui/Button/Button";
-import { api } from "@/config";
+import { api } from "@/api/config";
 import { getErrorMessage } from "@/helpers/getErrorMessage";
 import styles from './UserForm.module.scss';
 import { ErrorMessage } from "@ui/ErrorMessage/ErrorMessage";
@@ -16,7 +16,7 @@ export const UserForm: React.FC = () => {
     { id: 'registration', label: 'Utwórz konto' },
   ];
 
-  const { setUser } = useContext(AppContext);
+  const { setUserContext } = useContext(AppContext);
 
   const [activeTab, setActiveTab] = useState(tabs[0].id);
   const [name, setName] = useState("");
@@ -46,7 +46,7 @@ export const UserForm: React.FC = () => {
         localStorage.setItem('token', token);
       }
 
-      setUser();
+      setUserContext();
     } catch (error: any) {
       const errorMessage = getErrorMessage(error, "Nie udało się zalogować, prosimy spróbować później");
       setError(errorMessage);

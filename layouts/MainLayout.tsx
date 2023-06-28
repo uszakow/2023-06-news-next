@@ -4,23 +4,23 @@ import Head from "next/head";
 import { Footer } from "@/components/Footer/Footer";
 import { AppContext } from "@/context/app.context";
 import axios, { AxiosError } from "axios";
-import { api } from "@/config";
+import { api } from "@/api/config";
 import { useRouter } from "next/router";
 import { Loader } from "@/components/ui/Loader/Loader";
 
 export const MainLayout: React.FC<PropsWithChildren> = ({ children }) => {
   const router = useRouter();
-  const { isLoading, user, setUser } = useContext(AppContext);
+  const { isLoading, user, setUserContext } = useContext(AppContext);
 
   useEffect(() => {
-    setUser();
+    setUserContext();
 
     const interceptor = api.interceptors.response.use(
       response => response,
       (error: AxiosError) => {
         if (error.response && error.response.status === 401) {
           localStorage.removeItem('token');
-          setUser();
+          setUserContext();
         }
         return Promise.reject(error);
       }

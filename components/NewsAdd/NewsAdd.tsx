@@ -2,19 +2,24 @@ import React, { useContext, useState } from "react";
 import { Button } from "@ui/Button/Button";
 import { Modal } from "@ui/Modal/Modal";
 import { Input } from "@ui/Input/Input";
-import { api } from "@/config";
+import { api } from "@/api/config";
 import { AppContext } from "@/context/app.context";
 import { getErrorMessage } from "@/helpers/getErrorMessage";
 import { ErrorMessage } from "@ui/ErrorMessage/ErrorMessage";
+import { fetchNews } from "@/api/fetchNews";
 
-export const NewsAdd: React.FC = () => {
-  const { token, setUser } = useContext(AppContext);
+interface NewsAddProps {
+  updateNews: ([]) => void;
+}
+
+export const NewsAdd: React.FC<NewsAddProps> = ({ updateNews }) => {
+  const { token } = useContext(AppContext);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newsTitle, setNewsTitle] = useState('');
   const [newsContent, setNewsContent] = useState('');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -24,8 +29,8 @@ export const NewsAdd: React.FC = () => {
     let contentHtml = '';
 
     if (newsContent) {
-      const paragraphs = newsContent.split('\n').map(line => `<p>${line}</p>`);
-      contentHtml = paragraphs.join('');
+      const paragraphs = newsContent.split('\n');
+      contentHtml = JSON.stringify(paragraphs);
     }
 
     try {
@@ -40,12 +45,17 @@ export const NewsAdd: React.FC = () => {
         }
       });
 
-      setUser();
+      const updatedNews = await fetchNews();
+      updateNews(updatedNews);
+
+      setNewsTitle('');
+      setNewsContent('');
       closeModal();
     } catch (error) {
       const errorMessage = getErrorMessage(error, "Nie udało się stworzyć wiadomość");
       setError(errorMessage);
     } finally {
+
       setLoading(false);
     }
   };

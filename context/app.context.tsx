@@ -1,4 +1,5 @@
-import { api } from "@/config";
+import { api } from "@/api/config";
+import { fetchUser } from "@/api/fetchUser";
 import { UserInterface } from "@/types/User.interface";
 import { PropsWithChildren, createContext, useState } from "react";
 
@@ -7,7 +8,7 @@ interface AppContextProps {
   setIsLoading: (state: boolean) => void;
   token: string | null;
   user: UserInterface | null;
-  setUser: () => void;
+  setUserContext: () => void;
 }
 
 const initialAppContext: AppContextProps = {
@@ -15,7 +16,7 @@ const initialAppContext: AppContextProps = {
   setIsLoading: () => { },
   token: null,
   user: null,
-  setUser: () => { }
+  setUserContext: () => { }
 };
 
 export const AppContext = createContext<AppContextProps>(initialAppContext);
@@ -31,14 +32,10 @@ export const AppContextProvider: React.FC<PropsWithChildren> = ({ children }) =>
 
     if (token) {
       try {
-        const response = await api.get('/user', {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
+        const user = await fetchUser(token);
 
         setToken(token);
-        setUser(response.data);
+        setUser(user);
       } catch (error) { }
     } else {
       setToken(null);
@@ -53,7 +50,7 @@ export const AppContextProvider: React.FC<PropsWithChildren> = ({ children }) =>
     setIsLoading,
     token,
     user,
-    setUser: manageUser
+    setUserContext: manageUser
   };
 
   return (

@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { Modal } from "@ui/Modal/Modal";
 import { Button } from "@ui/Button/Button";
 import { Input } from "@ui/Input/Input";
-import { api } from "@/config";
+import { api } from "@/api/config";
 import { getErrorMessage } from "@/helpers/getErrorMessage";
 import { AppContext } from "@/context/app.context";
 import { ErrorMessage } from "../ui/ErrorMessage/ErrorMessage";
@@ -14,7 +14,7 @@ interface ChangeUserDataBody {
 }
 
 export const ProfileDataChange: React.FC = () => {
-  const { token, setUser } = useContext(AppContext);
+  const { token, setUserContext } = useContext(AppContext);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalName, setModalName] = useState('');
@@ -68,7 +68,7 @@ export const ProfileDataChange: React.FC = () => {
         }
       });
 
-      setUser();
+      setUserContext();
       closeModal();
     } catch (error) {
       const errorMessage = getErrorMessage(error, "Nie udało się zmienić nazwy użytkownika");
@@ -88,7 +88,7 @@ export const ProfileDataChange: React.FC = () => {
         }
       });
 
-      setUser();
+      setUserContext();
       closeModal();
     } catch (error: any) {
       const errorMessage = getErrorMessage(error, "Nie udało się usunąć konto użytkownika");
