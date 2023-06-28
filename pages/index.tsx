@@ -1,5 +1,5 @@
-import { NewsAdd } from "@/components/NewsAdd/NewsAdd";
-import { NewsPreview } from "@/components/NewsPreview/NewsPreview";
+import { NewsAdd } from "@/components/newsList/NewsAdd/NewsAdd";
+import { NewsPreview } from "@/components/newsList/NewsPreview/NewsPreview";
 import { AppContext } from "@/context/app.context";
 import { fetchNews } from "@/api/fetchNews";
 import { NewsInterface } from "@/types/News.interface";
@@ -23,9 +23,10 @@ const NewsPage: React.FC<NewsPageProps> = ({ initialNews }) => {
         <NewsPreview
           key={item.id}
           news={item}
+          updateNewsList={setNews}
         />
       ))}
-      {user && <NewsAdd updateNews={setNews} />}
+      {user && <NewsAdd updateNewsList={setNews} />}
     </>
   );
 };
