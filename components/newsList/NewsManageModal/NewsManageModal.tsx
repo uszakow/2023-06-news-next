@@ -1,7 +1,7 @@
-import { Button } from "@/components/ui/Button/Button";
-import { ErrorMessage } from "@/components/ui/ErrorMessage/ErrorMessage";
-import { Input } from "@/components/ui/Input/Input";
-import { Modal } from "@/components/ui/Modal/Modal";
+import { Button } from "@ui/Button/Button";
+import { ErrorMessage } from "@ui/ErrorMessage/ErrorMessage";
+import { Input } from "@ui/Input/Input";
+import { Modal } from "@ui/Modal/Modal";
 import styles from './NewsManageModal.module.scss';
 
 interface NewsModalProps {

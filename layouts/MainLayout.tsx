@@ -1,20 +1,31 @@
-import React, { PropsWithChildren, useContext, useEffect } from "react";
-import { Navbar } from "../components/Navbar/Navbar";
+import { PropsWithChildren, useContext, useEffect } from "react";
 import Head from "next/head";
-import { Footer } from "@/components/Footer/Footer";
-import { AppContext } from "@/context/app.context";
-import axios, { AxiosError } from "axios";
-import { api } from "@/api/config";
 import { useRouter } from "next/router";
+import axios, { AxiosError } from "axios";
+import { AppContext } from "@/context/app.context";
+import { api } from "@/api/config";
+import { Navbar } from "@/components/Navbar/Navbar";
+import { Footer } from "@/components/Footer/Footer";
 import { Loader } from "@/components/ui/Loader/Loader";
 
 export const MainLayout: React.FC<PropsWithChildren> = ({ children }) => {
   const router = useRouter();
-  const { isLoading, user, setUserContext } = useContext(AppContext);
+  const { isLoading, user, setUserContext, setIsLoading } = useContext(AppContext);
 
   useEffect(() => {
     setUserContext();
 
+    // loader when route changing
+    const handleRouteChangeStart = () => {
+      setIsLoading(true);
+    };
+    const handleRouteChangeComplete = () => {
+      setIsLoading(false);
+    };
+    router.events.on('routeChangeStart', handleRouteChangeStart);
+    router.events.on('routeChangeComplete', handleRouteChangeComplete);
+
+    // manage incorrect token
     const interceptor = api.interceptors.response.use(
       response => response,
       (error: AxiosError) => {
@@ -28,10 +39,16 @@ export const MainLayout: React.FC<PropsWithChildren> = ({ children }) => {
 
     return () => {
       axios.interceptors.response.eject(interceptor);
+      router.events.off('routeChangeStart', handleRouteChangeStart);
+      router.events.off('routeChangeComplete', handleRouteChangeComplete);
     };
   }, []);
 
   useEffect(() => {
+    if (router.asPath === '/news') {
+      router.push('/');
+    }
+
     if (!isLoading && !user && router.pathname === '/profile') {
       router.push('/login');
     }
@@ -44,12 +61,13 @@ export const MainLayout: React.FC<PropsWithChildren> = ({ children }) => {
     <div className="layout">
       <Head>
         <title>News app</title>
-        <meta name="description" content="Advanced application for working with to-do lists" />
+        <meta name="description" content="Application for adding and managing news." />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />
       <main className="content">
-        {isLoading ? <Loader /> : children}
+        {children}
+        {isLoading && <Loader />}
       </main>
       <Footer />
     </div>

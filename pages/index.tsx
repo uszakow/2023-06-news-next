@@ -1,16 +1,17 @@
-import { NewsAdd } from "@/components/newsList/NewsAdd/NewsAdd";
-import { NewsPreview } from "@/components/newsList/NewsPreview/NewsPreview";
+import { useContext, useState } from "react";
+import { GetServerSideProps } from "next";
+import Head from "next/head";
 import { AppContext } from "@/context/app.context";
 import { fetchNews } from "@/api/fetchNews";
 import { NewsInterface } from "@/types/News.interface";
-import Head from "next/head";
-import React, { useContext, useState } from "react";
+import { NewsAdd } from "@/components/newsList/NewsAdd/NewsAdd";
+import { NewsPreview } from "@/components/newsList/NewsPreview/NewsPreview";
 
-interface NewsPageProps {
+interface NewsListPageProps {
   initialNews: NewsInterface[];
 }
 
-const NewsPage: React.FC<NewsPageProps> = ({ initialNews }) => {
+const NewsListPage: React.FC<NewsListPageProps> = ({ initialNews }) => {
   const { user } = useContext(AppContext);
   const [news, setNews] = useState(initialNews);
 
@@ -31,14 +32,21 @@ const NewsPage: React.FC<NewsPageProps> = ({ initialNews }) => {
   );
 };
 
-export async function getServerSideProps() {
-  const initialNews = await fetchNews();
+export const getServerSideProps: GetServerSideProps = async () => {
+  const initialNews: NewsInterface[] = [];
+
+  try {
+    const newsList = await fetchNews();
+    initialNews.push(...newsList);
+  } catch (error) {
+    console.error(`ERROR:${error}`);
+  }
 
   return {
     props: {
       initialNews,
-    },
+    }
   };
 };
 
-export default NewsPage;
+export default NewsListPage;

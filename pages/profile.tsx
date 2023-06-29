@@ -1,12 +1,12 @@
 import Head from "next/head";
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AppContext } from "@/context/app.context";
-import { showNewsCount } from "@/helpers/pipes";
-import { ProfileDataChange } from "@/components/ProfileDataChange/ProfileDataChange";
-import { Button } from "@/components/ui/Button/Button";
-import { Typography } from "@/components/ui/Typography/Typography";
 import { fetchUser } from "@/api/fetchUser";
+import { showNewsCount } from "@/helpers/pipes";
 import { UserInterface } from "@/types/User.interface";
+import { Button } from "@ui/Button/Button";
+import { Typography } from "@ui/Typography/Typography";
+import { ProfileDataChange } from "@/components/ProfileDataChange/ProfileDataChange";
 
 const ProfilePage: React.FC = () => {
   const { token, setUserContext, setIsLoading } = useContext(AppContext);
@@ -24,7 +24,7 @@ const ProfilePage: React.FC = () => {
       };
       getUserFromApi();
     }
-    
+
     setIsLoading(false);
   }, []);
 

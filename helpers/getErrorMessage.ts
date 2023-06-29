@@ -1,6 +1,4 @@
 export const getErrorMessage = (error: any, defaultMessage: string): string => {
-  console.error("Error:", error);
-
   const errorMessage = error?.response?.data?.message;
 
   if (typeof errorMessage === "string") {

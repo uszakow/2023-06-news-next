@@ -1,14 +1,14 @@
+import { useContext, useEffect, useState } from "react";
+import { AppContext } from "@/context/app.context";
+import { api } from "@/api/config";
+import { getErrorMessage } from "@/helpers/getErrorMessage";
 import { TabItemInterface } from "@/types/TabItem.interface";
 import { Tabs } from "@ui/Tabs/Tabs";
-import { useContext, useEffect, useState } from "react";
+import { ErrorMessage } from "@ui/ErrorMessage/ErrorMessage";
 import { Typography } from "@ui/Typography/Typography";
 import { Input } from "@ui/Input/Input";
 import { Button } from "@ui/Button/Button";
-import { api } from "@/api/config";
-import { getErrorMessage } from "@/helpers/getErrorMessage";
 import styles from './UserForm.module.scss';
-import { ErrorMessage } from "@ui/ErrorMessage/ErrorMessage";
-import { AppContext } from "@/context/app.context";
 
 export const UserForm: React.FC = () => {
   const tabs: TabItemInterface[] = [

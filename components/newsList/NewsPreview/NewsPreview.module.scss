@@ -7,6 +7,11 @@
 
   &-title {
     @include text-one-line;
+    color: $main;
+
+    &:hover {
+      color: $error;
+    }
   }
 
   &-content {

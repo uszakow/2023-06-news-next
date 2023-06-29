@@ -1,12 +1,12 @@
 import { useContext, useState } from "react";
+import { api } from "@/api/config";
+import { AppContext } from "@/context/app.context";
+import { getErrorMessage } from "@/helpers/getErrorMessage";
 import { Modal } from "@ui/Modal/Modal";
 import { Button } from "@ui/Button/Button";
 import { Input } from "@ui/Input/Input";
-import { api } from "@/api/config";
-import { getErrorMessage } from "@/helpers/getErrorMessage";
-import { AppContext } from "@/context/app.context";
-import { ErrorMessage } from "../ui/ErrorMessage/ErrorMessage";
-import { Typography } from "../ui/Typography/Typography";
+import { ErrorMessage } from "@ui/ErrorMessage/ErrorMessage";
+import { Typography } from "@ui/Typography/Typography";
 
 interface ChangeUserDataBody {
   name?: string;

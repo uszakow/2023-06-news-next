@@ -1,7 +1,6 @@
-import { api } from "@/api/config";
+import { PropsWithChildren, createContext, useState } from "react";
 import { fetchUser } from "@/api/fetchUser";
 import { UserInterface } from "@/types/User.interface";
-import { PropsWithChildren, createContext, useState } from "react";
 
 interface AppContextProps {
   isLoading: boolean;

@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import Link from "next/link";
 import { AppContext } from "@/context/app.context";
 import { api } from "@/api/config";
 import { fetchNews } from "@/api/fetchNews";
@@ -17,14 +18,16 @@ interface NewsPreviewProps {
 
 export const NewsPreview: React.FC<NewsPreviewProps> = ({ news, updateNewsList }) => {
   const { user, token } = useContext(AppContext);
+
   const [content, setContent] = useState(['']);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
 
   const [editNewsModalOpen, setEditNewsModalOpen] = useState(false);
   const [deleteNewsModalOpen, setDeleteNewsModalOpen] = useState(false);
   const [updatedNewsTitle, setUpdatedNewsTitle] = useState(news.title);
   const [updatedNewsContent, setUpdatedNewsContent] = useState(news.content);
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const splittedContent = news.content.split('\n');
@@ -85,9 +88,12 @@ export const NewsPreview: React.FC<NewsPreviewProps> = ({ news, updateNewsList }
         className="flex flex-justify-between flex-align-end"
         type="title"
       >
-        <span className={styles['news-preview-title']}>
+        <Link
+          href={`/news/${news.id}`}
+          className={styles['news-preview-title']}
+        >
           {news.title}
-        </span>
+        </Link>
         {user?.id === news.author.id && (
           <div className="flex">
             <Button

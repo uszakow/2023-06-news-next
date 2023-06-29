@@ -13,8 +13,6 @@ export const Modal: React.FC<ModalProps> = ({ title, isOpen, className = '', chi
     return null;
   }
 
-  console.log('className', className)
-
   return (
     <div className={`${styles.modal} flex-center`}>
       <div
