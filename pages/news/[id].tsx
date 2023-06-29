@@ -4,6 +4,7 @@ import { api } from "@/api/config";
 import { fetchNews } from "@/api/fetchNews";
 import { NewsInterface } from "@/types/News.interface";
 import { Typography } from "@ui/Typography/Typography";
+import Head from "next/head";
 
 interface NewsPageProps {
   news: NewsInterface;
@@ -20,6 +21,9 @@ const NewsPage: React.FC<NewsPageProps> = ({ news }) => {
 
   return (
     <>
+      <Head>
+        <title>{news.title}</title>
+      </Head>
       <Typography type="title">{news?.title}</Typography>
       {content?.map((item, index) => (
         <p
@@ -63,7 +67,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return {
     paths,
-    fallback: 'blocking',
+    fallback: true,
   };
 };
 
