@@ -3,7 +3,7 @@ interface News {
   name: string;
 }
 
-export interface UserSummaryInterface {
+export interface UserInterface {
   id: string;
   name: string;
   news: News[];

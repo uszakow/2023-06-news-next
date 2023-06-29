@@ -2,7 +2,7 @@ import LoadingIcon from "@/public/icons/loader.svg";
 import styles from './Button.module.scss';
 
 interface ButtonProps {
-  type?: 'primary' | 'secondary' | 'danger' | 'inline';
+  type?: 'primary' | 'secondary' | 'danger' | 'inline' | 'adding';
   label: string;
   disabled?: boolean;
   loading?: boolean;
@@ -19,6 +19,7 @@ export const Button: React.FC<ButtonProps> = ({ type = 'primary', label, disable
       disabled={disabled || loading}
       onClick={onClick}
     >
+      {type === 'adding' && <div className={`${styles.plus} relative mr-1`} />}
       {loading ?
         <LoadingIcon className={styles.loader} /> :
         label

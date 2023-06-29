@@ -14,7 +14,8 @@
     padding-bottom: px(4);
   }
 
-  input {
+  input,
+  textarea {
     width: 100%;
     font-size: px(14);
     padding: px(8) px(12);
@@ -25,5 +26,9 @@
       font-style: italic;
       color: $light-grey;
     }
+  }
+
+  textarea {
+    resize: none;
   }
 }

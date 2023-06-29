@@ -2,13 +2,12 @@ import { PropsWithChildren, ReactNode, useState } from 'react';
 import styles from './Dropdown.module.scss';
 
 interface DropdownProps extends PropsWithChildren {
-  type?: 'simple' | 'framed';
+  type?: 'simple';
   title: string | ReactNode;
 }
 
 export const Dropdown: React.FC<DropdownProps> = ({ type = 'simple', title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
-  // const [isOpen, setIsOpen] = useState(true);
 
   const dropdownClasses = `${styles.dropdown} ${styles[type]} relative`;
   const dropdownContentClasses = `${!isOpen ? 'none' : ''} ${styles['dropdown-content']}`;

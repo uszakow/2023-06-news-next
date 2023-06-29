@@ -1,15 +1,15 @@
 import Link from "next/link";
-import React, { useContext } from "react";
-import styles from './Navbar.module.scss';
+import { useContext } from "react";
 import { Dropdown } from "@ui/Dropdown/Dropdown";
 import { AppContext } from "@/context/app.context";
+import styles from './Navbar.module.scss';
 
 export const Navbar: React.FC = () => {
-  const { user, setUser } = useContext(AppContext);
+  const { user, setUserContext } = useContext(AppContext);
 
   const logout = () => {
     localStorage.removeItem('token');
-    setUser();
+    setUserContext();
   };
 
   return (
