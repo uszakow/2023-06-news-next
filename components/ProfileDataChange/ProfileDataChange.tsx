@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
-import { api } from "@/api/config";
+import { UpdateUserDto } from "@/types/UpdateUser.dto";
+import { useUserApi } from "@/api/useUserApi";
 import { AppContext } from "@/context/app.context";
 import { getErrorMessage } from "@/helpers/getErrorMessage";
 import { Modal } from "@ui/Modal/Modal";
@@ -8,13 +9,10 @@ import { Input } from "@ui/Input/Input";
 import { ErrorMessage } from "@ui/ErrorMessage/ErrorMessage";
 import { Typography } from "@ui/Typography/Typography";
 
-interface ChangeUserDataBody {
-  name?: string;
-  password?: string;
-}
-
 export const ProfileDataChange: React.FC = () => {
   const { token, setUserContext } = useContext(AppContext);
+
+  const { updateUserApi, deleteUserApi } = useUserApi();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalName, setModalName] = useState('');
@@ -51,7 +49,7 @@ export const ProfileDataChange: React.FC = () => {
       return;
     }
 
-    const body: ChangeUserDataBody = {};
+    const body: UpdateUserDto = {};
     if (field === 'name') {
       body.name = name;
     }
@@ -62,11 +60,9 @@ export const ProfileDataChange: React.FC = () => {
     try {
       setLoading(true);
 
-      await api.put('/user', body, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+      if (token) {
+        await updateUserApi(body, token);
+      }
 
       setUserContext();
       closeModal();
@@ -82,11 +78,9 @@ export const ProfileDataChange: React.FC = () => {
     try {
       setLoading(true);
 
-      await api.delete('/user', {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+      if (token) {
+        await deleteUserApi(token);
+      }
 
       setUserContext();
       closeModal();

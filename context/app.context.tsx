@@ -1,5 +1,5 @@
 import { PropsWithChildren, createContext, useState } from "react";
-import { fetchUser } from "@/api/fetchUser";
+import { useUserApi } from "@/api/useUserApi";
 import { UserInterface } from "@/types/User.interface";
 
 interface AppContextProps {
@@ -21,6 +21,8 @@ const initialAppContext: AppContextProps = {
 export const AppContext = createContext<AppContextProps>(initialAppContext);
 
 export const AppContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
+  const { getUserApi } = useUserApi();
+
   const [isLoading, setIsLoading] = useState(initialAppContext.isLoading);
   const [token, setToken] = useState(initialAppContext.token);
   const [user, setUser] = useState(initialAppContext.user);
@@ -31,7 +33,7 @@ export const AppContextProvider: React.FC<PropsWithChildren> = ({ children }) =>
 
     if (token) {
       try {
-        const user = await fetchUser(token);
+        const user = await getUserApi(token);
 
         setToken(token);
         setUser(user);

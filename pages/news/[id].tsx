@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { GetStaticPaths, GetStaticProps } from "next";
-import { api } from "@/api/config";
-import { fetchNews } from "@/api/fetchNews";
+import { useNewsApi } from "@/api/useNewsApi";
 import { NewsInterface } from "@/types/News.interface";
 import { Typography } from "@ui/Typography/Typography";
 import Head from "next/head";
@@ -52,10 +51,12 @@ const NewsPage: React.FC<NewsPageProps> = ({ news }) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
+  const { getNewsListApi } = useNewsApi();
+
   const news: NewsInterface[] = [];
 
   try {
-    const newsList = await fetchNews();
+    const newsList = await getNewsListApi();
     news.push(...newsList);
   } catch (error) {
     console.error(`ERROR:${error}`);
@@ -72,12 +73,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const id = params?.id;
+  const { getNewsApi } = useNewsApi();
+
+  const id: string = params?.id as string;
   let news = null;
 
   try {
-    const response = await api.get(`/news/${id}`);
-    news = response.data;
+    news = await getNewsApi(id);
   } catch (error) {
     return {
       notFound: true

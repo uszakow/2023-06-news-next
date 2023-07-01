@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { AppContext } from "@/context/app.context";
-import { fetchNews } from "@/api/fetchNews";
+import { useNewsApi } from "@/api/useNewsApi";
 import { NewsInterface } from "@/types/News.interface";
 import { NewsAdd } from "@/components/newsList/NewsAdd/NewsAdd";
 import { NewsPreview } from "@/components/newsList/NewsPreview/NewsPreview";
@@ -33,10 +33,12 @@ const NewsListPage: React.FC<NewsListPageProps> = ({ initialNews }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
+  const { getNewsListApi } = useNewsApi();
+
   const initialNews: NewsInterface[] = [];
 
   try {
-    const newsList = await fetchNews();
+    const newsList = await getNewsListApi();
     initialNews.push(...newsList);
   } catch (error) {
     console.error(`ERROR:${error}`);
