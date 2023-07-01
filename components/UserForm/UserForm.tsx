@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "@/context/app.context";
-import { api } from "@/api/config";
+import { useUserApi } from "@/api/useUserApi";
 import { getErrorMessage } from "@/helpers/getErrorMessage";
 import { TabItemInterface } from "@/types/TabItem.interface";
 import { Tabs } from "@ui/Tabs/Tabs";
@@ -17,6 +17,8 @@ export const UserForm: React.FC = () => {
   ];
 
   const { setUserContext } = useContext(AppContext);
+
+  const { createUserApi, loginUserApi } = useUserApi();
 
   const [activeTab, setActiveTab] = useState(tabs[0].id);
   const [name, setName] = useState("");
@@ -35,12 +37,7 @@ export const UserForm: React.FC = () => {
   const loginUser = async () => {
     try {
       setLoading(true);
-      const response = await api.post('/user/login', {
-        name,
-        password
-      });
-
-      const { token } = response.data;
+      const token = await loginUserApi({ name, password });
 
       if (token) {
         localStorage.setItem('token', token);
@@ -58,10 +55,14 @@ export const UserForm: React.FC = () => {
   const createUser = async () => {
     try {
       setLoading(true);
-      const response = await api.post('/user', {
-        name,
-        password
-      });
+
+      // an example of using api directly
+      // const response = await api.post('/user', {
+      //   name,
+      //   password
+      // });
+      // an example of useing api with userApi object
+      const response = await createUserApi({ name, password });
 
       if (response.status === 201) {
         loginUser();
@@ -108,12 +109,6 @@ export const UserForm: React.FC = () => {
         />
         {error && <ErrorMessage message={error} />}
       </div>
-
-      <style jsx>{`
-        .user-form {
-          border: 1px solid black;
-        }
-      `}</style>
     </div>
   );
 };

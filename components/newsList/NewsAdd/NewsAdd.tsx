@@ -1,7 +1,6 @@
 import { useContext, useState } from "react";
 import { AppContext } from "@/context/app.context";
-import { api } from "@/api/config";
-import { fetchNews } from "@/api/fetchNews";
+import { useNewsApi } from "@/api/useNewsApi";
 import { getErrorMessage } from "@/helpers/getErrorMessage";
 import { Button } from "@ui/Button/Button";
 import { NewsManageModal } from "../NewsManageModal/NewsManageModal";
@@ -13,6 +12,8 @@ interface NewsAddProps {
 export const NewsAdd: React.FC<NewsAddProps> = ({ updateNewsList }) => {
   const { token } = useContext(AppContext);
 
+  const { createNewsApi, getNewsListApi } = useNewsApi();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newsTitle, setNewsTitle] = useState('');
   const [newsContent, setNewsContent] = useState('');
@@ -23,16 +24,11 @@ export const NewsAdd: React.FC<NewsAddProps> = ({ updateNewsList }) => {
     try {
       setLoading(true);
 
-      await api.post('/news', {
-        title: newsTitle,
-        content: newsContent
-      }, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+      if (token) {
+        await createNewsApi({ title: newsTitle, content: newsContent }, token);
+      }
 
-      const updatedNewsList = await fetchNews();
+      const updatedNewsList = await getNewsListApi();
       updateNewsList(updatedNewsList);
 
       setNewsTitle('');

@@ -1,8 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import { AppContext } from "@/context/app.context";
-import { api } from "@/api/config";
-import { fetchNews } from "@/api/fetchNews";
+import { useNewsApi } from "@/api/useNewsApi";
 import { getErrorMessage } from "@/helpers/getErrorMessage";
 import { NewsInterface } from "@/types/News.interface";
 import { Button } from "@ui/Button/Button";
@@ -18,6 +17,8 @@ interface NewsPreviewProps {
 
 export const NewsPreview: React.FC<NewsPreviewProps> = ({ news, updateNewsList }) => {
   const { user, token } = useContext(AppContext);
+
+  const { getNewsListApi, updateNewsApi, deleteNewsApi } = useNewsApi();
 
   const [content, setContent] = useState(['']);
 
@@ -39,16 +40,11 @@ export const NewsPreview: React.FC<NewsPreviewProps> = ({ news, updateNewsList }
     try {
       setLoading(true);
 
-      await api.put(`/news/${news.id}`, {
-        title: updatedNewsTitle,
-        content: updatedNewsContent
-      }, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+      if (token) {
+        await updateNewsApi(news.id, { title: updatedNewsTitle, content: updatedNewsContent }, token);
+      }
 
-      const updatedNewsList = await fetchNews();
+      const updatedNewsList = await getNewsListApi();
       updateNewsList(updatedNewsList);
 
       setEditNewsModalOpen(false);
@@ -64,13 +60,11 @@ export const NewsPreview: React.FC<NewsPreviewProps> = ({ news, updateNewsList }
     try {
       setLoading(true);
 
-      await api.delete(`/news/${news.id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+      if (token) {
+        await deleteNewsApi(news.id, token);
+      }
 
-      const updatedNewsList = await fetchNews();
+      const updatedNewsList = await getNewsListApi();
       updateNewsList(updatedNewsList);
 
       setDeleteNewsModalOpen(false);
