@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "@/context/app.context";
 import { useUserApi } from "@/api/useUserApi";
-import { getErrorMessage } from "@/helpers/getErrorMessage";
 import { TabItemInterface } from "@/types/TabItem.interface";
 import { Tabs } from "@ui/Tabs/Tabs";
 import { ErrorMessage } from "@ui/ErrorMessage/ErrorMessage";
@@ -24,7 +23,7 @@ export const UserForm: React.FC = () => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState<string | string[]>("");
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -45,8 +44,7 @@ export const UserForm: React.FC = () => {
 
       setUserContext();
     } catch (error: any) {
-      const errorMessage = getErrorMessage(error, "Nie udało się zalogować, prosimy spróbować później");
-      setError(errorMessage);
+      setError(error.response?.data?.message || "Nie udało się zalogować, prosimy spróbować później");
     } finally {
       setLoading(false);
     }
@@ -68,8 +66,7 @@ export const UserForm: React.FC = () => {
         loginUser();
       }
     } catch (error: any) {
-      const errorMessage = getErrorMessage(error, "Nie udało się stworzyć konto użytkownika");
-      setError(errorMessage);
+      setError(error.response?.data?.message || "Nie udało się stworzyć konto użytkownika");
     } finally {
       setLoading(false);
     }

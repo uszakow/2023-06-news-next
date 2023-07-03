@@ -2,13 +2,13 @@ import { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import { AppContext } from "@/context/app.context";
 import { useNewsApi } from "@/api/useNewsApi";
-import { getErrorMessage } from "@/helpers/getErrorMessage";
 import { NewsInterface } from "@/types/News.interface";
 import { Button } from "@ui/Button/Button";
 import { Modal } from "@ui/Modal/Modal";
 import { Typography } from "@ui/Typography/Typography";
 import { NewsManageModal } from "../NewsManageModal/NewsManageModal";
 import styles from './NewsPreview.module.scss';
+import { ErrorMessage } from "@/components/ui/ErrorMessage/ErrorMessage";
 
 interface NewsPreviewProps {
   news: NewsInterface;
@@ -28,7 +28,7 @@ export const NewsPreview: React.FC<NewsPreviewProps> = ({ news, updateNewsList }
   const [updatedNewsContent, setUpdatedNewsContent] = useState(news.content);
 
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState<string | string[]>('');
 
   useEffect(() => {
     const splittedContent = news.content.split('\n');
@@ -48,9 +48,8 @@ export const NewsPreview: React.FC<NewsPreviewProps> = ({ news, updateNewsList }
       updateNewsList(updatedNewsList);
 
       setEditNewsModalOpen(false);
-    } catch (error) {
-      const errorMessage = getErrorMessage(error, "Nie udało się zaktualizować wiadomość");
-      setError(errorMessage);
+    } catch (error: any) {
+      setError(error.response?.data?.message || "Nie udało się zaktualizować wiadomość");
     } finally {
       setLoading(false);
     }
@@ -68,12 +67,23 @@ export const NewsPreview: React.FC<NewsPreviewProps> = ({ news, updateNewsList }
       updateNewsList(updatedNewsList);
 
       setDeleteNewsModalOpen(false);
-    } catch (error) {
-      const errorMessage = getErrorMessage(error, "Nie udałos się usunąć wiadomość");
-      setError(errorMessage);
+    } catch (error: any) {
+      setError(error.response?.data?.message || "Nie udałos się usunąć wiadomość");
     } finally {
       setLoading(false);
     }
+  };
+
+  const closeEditNewsModal = (): void => {
+    setError('');
+    setUpdatedNewsTitle(news.title);
+    setUpdatedNewsContent(news.content);
+    setEditNewsModalOpen(false);
+  };
+
+  const closeDeleteNewsModal = (): void => {
+    setError('');
+    setDeleteNewsModalOpen(false);
   };
 
   return (
@@ -113,6 +123,7 @@ export const NewsPreview: React.FC<NewsPreviewProps> = ({ news, updateNewsList }
 
       <NewsManageModal
         isOpen={editNewsModalOpen}
+        modalTitle="Edytowanie wiadomości"
         newsTitle={updatedNewsTitle}
         newsContent={updatedNewsContent}
         loading={loading}
@@ -120,13 +131,13 @@ export const NewsPreview: React.FC<NewsPreviewProps> = ({ news, updateNewsList }
         setNewsTitle={setUpdatedNewsTitle}
         setNewsContent={setUpdatedNewsContent}
         manageNews={updateNews}
-        closeModal={() => setEditNewsModalOpen(false)}
+        closeModal={() => closeEditNewsModal()}
       />
 
       <Modal
         title="Usuń wiadomość"
         isOpen={deleteNewsModalOpen}
-        onClose={() => setDeleteNewsModalOpen(false)}
+        onClose={() => closeDeleteNewsModal()}
       >
         <Typography type="text">Potwierdź usunięcie tej wiadomości.</Typography>
         <Button
@@ -136,6 +147,7 @@ export const NewsPreview: React.FC<NewsPreviewProps> = ({ news, updateNewsList }
           loading={loading}
           onClick={() => deleteNews()}
         />
+        {error && <ErrorMessage message={error} />}
       </Modal>
     </div>
   );

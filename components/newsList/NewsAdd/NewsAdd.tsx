@@ -1,7 +1,6 @@
 import { useContext, useState } from "react";
 import { AppContext } from "@/context/app.context";
 import { useNewsApi } from "@/api/useNewsApi";
-import { getErrorMessage } from "@/helpers/getErrorMessage";
 import { Button } from "@ui/Button/Button";
 import { NewsManageModal } from "../NewsManageModal/NewsManageModal";
 
@@ -18,7 +17,7 @@ export const NewsAdd: React.FC<NewsAddProps> = ({ updateNewsList }) => {
   const [newsTitle, setNewsTitle] = useState('');
   const [newsContent, setNewsContent] = useState('');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState<string | string[]>('');
 
   const createNews = async (): Promise<void> => {
     try {
@@ -34,12 +33,16 @@ export const NewsAdd: React.FC<NewsAddProps> = ({ updateNewsList }) => {
       setNewsTitle('');
       setNewsContent('');
       setIsModalOpen(false);
-    } catch (error) {
-      const errorMessage = getErrorMessage(error, "Nie udało się stworzyć wiadomość");
-      setError(errorMessage);
+    } catch (error: any) {
+      setError(error.response?.data?.message || "Nie udało się stworzyć wiadomość.");
     } finally {
       setLoading(false);
     }
+  };
+
+  const closeModal = (): void => {
+    setError('');
+    setIsModalOpen(false);
   };
 
   return (
@@ -53,6 +56,7 @@ export const NewsAdd: React.FC<NewsAddProps> = ({ updateNewsList }) => {
 
       <NewsManageModal
         isOpen={isModalOpen}
+        modalTitle="Dodanie nowej wiadomości"
         newsTitle={newsTitle}
         newsContent={newsContent}
         loading={loading}
@@ -60,7 +64,7 @@ export const NewsAdd: React.FC<NewsAddProps> = ({ updateNewsList }) => {
         setNewsTitle={setNewsTitle}
         setNewsContent={setNewsContent}
         manageNews={createNews}
-        closeModal={() => setIsModalOpen(false)}
+        closeModal={() => closeModal()}
       />
     </>
   );
