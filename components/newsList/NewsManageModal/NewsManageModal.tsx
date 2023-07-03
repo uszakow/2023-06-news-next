@@ -10,14 +10,14 @@ interface NewsModalProps {
   newsTitle: string;
   newsContent: string;
   loading: boolean;
-  errorMessage: string;
+  error: string | string[];
   setNewsTitle: (title: string) => void;
   setNewsContent: (title: string) => void;
   manageNews: () => void;
   closeModal: () => void;
 }
 
-export const NewsManageModal: React.FC<NewsModalProps> = ({ isOpen, modalTitle, newsTitle, newsContent, loading, errorMessage, setNewsTitle, setNewsContent, manageNews, closeModal }) => {
+export const NewsManageModal: React.FC<NewsModalProps> = ({ isOpen, modalTitle, newsTitle, newsContent, loading, error, setNewsTitle, setNewsContent, manageNews, closeModal }) => {
   return (
     <Modal
       className={styles['news-modal']}
@@ -46,7 +46,7 @@ export const NewsManageModal: React.FC<NewsModalProps> = ({ isOpen, modalTitle, 
         loading={loading}
         onClick={() => manageNews()}
       />
-      {errorMessage && <ErrorMessage message={errorMessage} />}
+      {error && <ErrorMessage message={error} />}
     </Modal>
   );
 };
