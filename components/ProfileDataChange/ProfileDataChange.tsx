@@ -2,7 +2,6 @@ import { useContext, useState } from "react";
 import { UpdateUserDto } from "@/types/UpdateUser.dto";
 import { useUserApi } from "@/api/useUserApi";
 import { AppContext } from "@/context/app.context";
-import { getErrorMessage } from "@/helpers/getErrorMessage";
 import { Modal } from "@ui/Modal/Modal";
 import { Button } from "@ui/Button/Button";
 import { Input } from "@ui/Input/Input";
@@ -20,7 +19,7 @@ export const ProfileDataChange: React.FC = () => {
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState<string | string[]>("");
 
   const openChangeNameModal = () => {
     setModalName('name');
@@ -66,9 +65,8 @@ export const ProfileDataChange: React.FC = () => {
 
       setUserContext();
       closeModal();
-    } catch (error) {
-      const errorMessage = getErrorMessage(error, "Nie udało się zmienić nazwy użytkownika");
-      setError(errorMessage);
+    } catch (error: any) {
+      setError(error.response?.data?.message || "Nie udało się zmienić nazwy użytkownika");
     } finally {
       setLoading(false);
     }
@@ -85,8 +83,7 @@ export const ProfileDataChange: React.FC = () => {
       setUserContext();
       closeModal();
     } catch (error: any) {
-      const errorMessage = getErrorMessage(error, "Nie udało się usunąć konto użytkownika");
-      setError(errorMessage);
+      setError(error.response?.data?.message || "Nie udało się usunąć konto użytkownika");
     } finally {
       setLoading(false);
     }

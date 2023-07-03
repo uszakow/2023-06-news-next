@@ -6,6 +6,7 @@ import styles from './NewsManageModal.module.scss';
 
 interface NewsModalProps {
   isOpen: boolean;
+  modalTitle: string;
   newsTitle: string;
   newsContent: string;
   loading: boolean;
@@ -16,11 +17,11 @@ interface NewsModalProps {
   closeModal: () => void;
 }
 
-export const NewsManageModal: React.FC<NewsModalProps> = ({ isOpen, newsTitle, newsContent, loading, errorMessage, setNewsTitle, setNewsContent, manageNews, closeModal }) => {
+export const NewsManageModal: React.FC<NewsModalProps> = ({ isOpen, modalTitle, newsTitle, newsContent, loading, errorMessage, setNewsTitle, setNewsContent, manageNews, closeModal }) => {
   return (
     <Modal
       className={styles['news-modal']}
-      title="Dodanie nowej wiadomości"
+      title={modalTitle}
       isOpen={isOpen}
       onClose={closeModal}
     >
