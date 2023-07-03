@@ -60,7 +60,7 @@ export const NewsAdd: React.FC<NewsAddProps> = ({ updateNewsList }) => {
         newsTitle={newsTitle}
         newsContent={newsContent}
         loading={loading}
-        errorMessage={error}
+        error={error}
         setNewsTitle={setNewsTitle}
         setNewsContent={setNewsContent}
         manageNews={createNews}
