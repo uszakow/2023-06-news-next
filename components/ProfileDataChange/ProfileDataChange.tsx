@@ -89,7 +89,7 @@ export const ProfileDataChange: React.FC = () => {
     }
   };
 
-  const modalTitle = () => {
+  const getModalTitle = () => {
     switch (modalName) {
       case 'name':
         return 'Zmień nazwę użytkownika';
@@ -102,7 +102,7 @@ export const ProfileDataChange: React.FC = () => {
     }
   };
 
-  const modalContent = () => {
+  const getModalContent = () => {
     switch (modalName) {
       case 'name':
         return (
@@ -185,11 +185,11 @@ export const ProfileDataChange: React.FC = () => {
       />
 
       <Modal
-        title={modalTitle()}
+        title={getModalTitle()}
         isOpen={isModalOpen}
         onClose={closeModal}
       >
-        {modalContent()}
+        {getModalContent()}
         {error && <ErrorMessage message={error} />}
       </Modal>
     </div >
