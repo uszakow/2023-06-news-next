@@ -21,7 +21,7 @@ const NewsPage: React.FC<NewsPageProps> = ({ news }) => {
   return (
     <>
       <Head>
-        <title>{news.title}</title>
+        <title>{news?.title || 'News app'}</title>
       </Head>
       <Typography type="title">{news?.title}</Typography>
       {content?.map((item, index) => (
