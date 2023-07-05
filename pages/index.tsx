@@ -11,9 +11,20 @@ interface NewsListPageProps {
   initialNews: NewsInterface[];
 }
 
+const getNewsList = async (): Promise<NewsInterface[]> => {
+  const { getNewsListApi } = useNewsApi();
+
+  return await getNewsListApi();
+};
+
 const NewsListPage: React.FC<NewsListPageProps> = ({ initialNews }) => {
   const { user } = useContext(AppContext);
   const [news, setNews] = useState(initialNews);
+
+  const updateNewsList = async (): Promise<void> => {
+    const updatedNewsList = await getNewsList();
+    setNews(updatedNewsList);
+  };
 
   return (
     <>
@@ -24,21 +35,19 @@ const NewsListPage: React.FC<NewsListPageProps> = ({ initialNews }) => {
         <NewsPreview
           key={item.id}
           news={item}
-          updateNewsList={setNews}
+          onNewsChange={() => updateNewsList()}
         />
       ))}
-      {user && <NewsAdd updateNewsList={setNews} />}
+      {user && <NewsAdd onNewsChange={() => updateNewsList()} />}
     </>
   );
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const { getNewsListApi } = useNewsApi();
-
   const initialNews: NewsInterface[] = [];
 
   try {
-    const newsList = await getNewsListApi();
+    const newsList = await getNewsList();
     initialNews.push(...newsList);
   } catch (error) {
     console.error(`ERROR:${error}`);
