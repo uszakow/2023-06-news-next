@@ -5,13 +5,13 @@ import { Button } from "@ui/Button/Button";
 import { NewsManageModal } from "../NewsManageModal/NewsManageModal";
 
 interface NewsAddProps {
-  updateNewsList: ([]) => void;
+  onNewsChange: () => void;
 }
 
-export const NewsAdd: React.FC<NewsAddProps> = ({ updateNewsList }) => {
+export const NewsAdd: React.FC<NewsAddProps> = ({ onNewsChange }) => {
   const { token } = useContext(AppContext);
 
-  const { createNewsApi, getNewsListApi } = useNewsApi();
+  const { createNewsApi } = useNewsApi();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newsTitle, setNewsTitle] = useState('');
@@ -27,8 +27,7 @@ export const NewsAdd: React.FC<NewsAddProps> = ({ updateNewsList }) => {
         await createNewsApi({ title: newsTitle, content: newsContent }, token);
       }
 
-      const updatedNewsList = await getNewsListApi();
-      updateNewsList(updatedNewsList);
+      await onNewsChange();
 
       setNewsTitle('');
       setNewsContent('');
