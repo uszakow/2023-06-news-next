@@ -149,12 +149,17 @@ export const ProfileDataChange: React.FC = () => {
       case 'delete':
         return (
           <>
-            <Typography type='title'>Uwaga - potwierdzasz USUNIĘCIE tego konta!</Typography>
-            <Typography type='text'>Tej akcji nie da się odwrócić! Jeżeli nie chcesz tego robić, po prostu zamknij to okno.</Typography>
+            <Typography type='title'>
+              Uwaga - potwierdzasz USUNIĘCIE tego konta!
+            </Typography>
+            <Typography type='text'>
+              Tej akcji nie da się odwrócić! Jeżeli nie chcesz tego robić, po prostu zamknij to okno.
+            </Typography>
             <Button
               className="mt-2 m-auto"
               type="danger"
               label="Usuń konto"
+              loading={loading}
               onClick={() => deleteUser()}
             />
           </>
