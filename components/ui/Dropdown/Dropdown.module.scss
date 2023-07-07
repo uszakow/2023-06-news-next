@@ -1,5 +1,5 @@
-@import '/styles/variables';
-@import '/styles/functions';
+@import "/styles/variables";
+@import "/styles/functions";
 
 .dropdown {
   cursor: pointer;
@@ -7,20 +7,17 @@
   &-content {
     position: absolute;
     top: 100%;
-    width: 100%;
+    right: px(-16);
     z-index: $z-regular;
+    width: 100%;
+    min-width: px(180);
     display: flex;
     flex-direction: column;
+    background-color: $background;
+    border: 1px solid $light-grey;
+    border-radius: $border-radius;
 
-    .simple & {
-      right: px(-16);
-      min-width: px(180);
-      background-color: $background;
-      border: 1px solid $light-grey;
-      border-radius: $border-radius;
-    }
-
-    >* {
+    > * {
       cursor: pointer;
       display: block;
       font-size: px(18);
@@ -28,7 +25,7 @@
       padding: px(4);
     }
 
-    >*:not(:last-child) {
+    > *:not(:last-child) {
       border-bottom: 1px solid $light-grey;
     }
   }
