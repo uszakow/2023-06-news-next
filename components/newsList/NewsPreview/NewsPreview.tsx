@@ -48,7 +48,7 @@ export const NewsPreview: React.FC<NewsPreviewProps> = ({ news, onNewsChange }) 
 
       setIsEditNewsModalOpen(false);
     } catch (error: any) {
-      setError(error.response?.data?.message || "Nie udało się zaktualizować wiadomość");
+      setError(error.response?.data?.message || "Nie udało się zaktualizować wiadomość.");
     } finally {
       setLoading(false);
     }
@@ -66,7 +66,7 @@ export const NewsPreview: React.FC<NewsPreviewProps> = ({ news, onNewsChange }) 
 
       setIsDeleteNewsModalOpen(false);
     } catch (error: any) {
-      setError(error.response?.data?.message || "Nie udałos się usunąć wiadomość");
+      setError(error.response?.data?.message || "Nie udałos się usunąć wiadomość.");
     } finally {
       setLoading(false);
     }

@@ -66,7 +66,7 @@ export const ProfileDataChange: React.FC = () => {
       setUserContext();
       closeModal();
     } catch (error: any) {
-      setError(error.response?.data?.message || "Nie udało się zmienić nazwy użytkownika");
+      setError(error.response?.data?.message || "Nie udało się zmienić danych użytkownika.");
     } finally {
       setLoading(false);
     }
@@ -83,7 +83,7 @@ export const ProfileDataChange: React.FC = () => {
       setUserContext();
       closeModal();
     } catch (error: any) {
-      setError(error.response?.data?.message || "Nie udało się usunąć konto użytkownika");
+      setError(error.response?.data?.message || "Nie udało się usunąć konto użytkownika.");
     } finally {
       setLoading(false);
     }
