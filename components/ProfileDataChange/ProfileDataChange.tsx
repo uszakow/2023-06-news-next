@@ -102,73 +102,6 @@ export const ProfileDataChange: React.FC = () => {
     }
   };
 
-  const getModalContent = () => {
-    switch (modalName) {
-      case 'name':
-        return (
-          <>
-            <Input
-              value={name}
-              label="Nowa nazwa użytkownika"
-              placeholder="Wprowadź nazwę użytkownika"
-              onChange={setName}
-            />
-            <Button
-              className="mt-2 m-auto"
-              label="Zmień nazwę"
-              loading={loading}
-              onClick={() => changeUserData('name')}
-            />
-          </>
-        );
-      case 'password':
-        return (
-          <>
-            <Input
-              type="password"
-              value={password}
-              label="Nowe hasło użytkownika"
-              placeholder="Wprowadź hasło użytkownika"
-              onChange={setPassword}
-            />
-            <Input
-              type="password"
-              value={passwordConfirmation}
-              label="Potwierdzenie hasła użytkownika"
-              placeholder="Wprowadź hasło użytkownika jeszcze raz"
-              onChange={setPasswordConfirmation}
-            />
-            <Button
-              className="mt-2 m-auto"
-              label="Zmień hasło"
-              loading={loading}
-              onClick={() => changeUserData('password')}
-            />
-          </>
-        );
-      case 'delete':
-        return (
-          <>
-            <Typography type='title'>
-              Uwaga - potwierdzasz USUNIĘCIE tego konta!
-            </Typography>
-            <Typography type='text'>
-              Tej akcji nie da się odwrócić! Jeżeli nie chcesz tego robić, po prostu zamknij to okno.
-            </Typography>
-            <Button
-              className="mt-2 m-auto"
-              type="danger"
-              label="Usuń konto"
-              loading={loading}
-              onClick={() => deleteUser()}
-            />
-          </>
-        );
-      default:
-        return null;
-    }
-  };
-
   return (
     <div className="flex mt-2">
       <Button
@@ -194,7 +127,59 @@ export const ProfileDataChange: React.FC = () => {
         isOpen={isModalOpen}
         onClose={closeModal}
       >
-        {getModalContent()}
+        <div r-if={modalName === 'name'}>
+          <Input
+            value={name}
+            label="Nowa nazwa użytkownika"
+            placeholder="Wprowadź nazwę użytkownika"
+            onChange={setName}
+          />
+          <Button
+            className="mt-2 m-auto"
+            label="Zmień nazwę"
+            loading={loading}
+            onClick={() => changeUserData('name')}
+          />
+        </div>
+
+        <div r-else-if={modalName === 'password'}>
+          <Input
+            type="password"
+            value={password}
+            label="Nowe hasło użytkownika"
+            placeholder="Wprowadź hasło użytkownika"
+            onChange={setPassword}
+          />
+          <Input
+            type="password"
+            value={passwordConfirmation}
+            label="Potwierdzenie hasła użytkownika"
+            placeholder="Wprowadź hasło użytkownika jeszcze raz"
+            onChange={setPasswordConfirmation}
+          />
+          <Button
+            className="mt-2 m-auto"
+            label="Zmień hasło"
+            loading={loading}
+            onClick={() => changeUserData('password')}
+          />
+        </div>
+
+        <div r-else-if={modalName === 'delete'}>
+          <Typography type='title'>
+            Uwaga - potwierdzasz USUNIĘCIE tego konta!
+          </Typography>
+          <Typography type='text'>
+            Tej akcji nie da się odwrócić! Jeżeli nie chcesz tego robić, po prostu zamknij to okno.
+          </Typography>
+          <Button
+            className="mt-2 m-auto"
+            type="danger"
+            label="Usuń konto"
+            loading={loading}
+            onClick={() => deleteUser()}
+          />
+        </div>
         <ErrorMessage r-if={error} message={error} />
       </Modal>
     </div >

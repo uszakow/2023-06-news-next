@@ -9,10 +9,10 @@ interface TypographyProps extends PropsWithChildren {
 export const Typography: React.FC<TypographyProps> = ({ type, className = '', children }) => {
   const typographyClasses = `${styles[type]} ${className}`;
 
-  switch (type) {
-    case 'title':
-      return <h2 className={typographyClasses}>{children}</h2>;
-    case 'text':
-      return <span className={typographyClasses}>{children}</span>;
-  }
+  return (
+    <>
+      <h2 r-if={type === 'title'} className={typographyClasses}>{children}</h2>
+      <span r-else-if={type === 'text'} className={typographyClasses}>{children}</span>
+    </>
+  );
 };
