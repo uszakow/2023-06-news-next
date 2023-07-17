@@ -195,7 +195,7 @@ export const ProfileDataChange: React.FC = () => {
         onClose={closeModal}
       >
         {getModalContent()}
-        {error && <ErrorMessage message={error} />}
+        <ErrorMessage r-if={error} message={error} />
       </Modal>
     </div >
   );

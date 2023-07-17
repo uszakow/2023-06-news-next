@@ -67,7 +67,7 @@ export const MainLayout: React.FC<PropsWithChildren> = ({ children }) => {
       <Navbar />
       <main className="content">
         {children}
-        {isLoading && <Loader />}
+        <Loader r-if={isLoading} />
       </main>
       <Footer />
     </div>

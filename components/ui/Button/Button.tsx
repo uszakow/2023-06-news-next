@@ -19,11 +19,12 @@ export const Button: React.FC<ButtonProps> = ({ type = 'primary', label, disable
       disabled={disabled || loading}
       onClick={onClick}
     >
-      {type === 'adding' && <div className={`${styles.plus} relative mr-1`} />}
-      {loading ?
-        <LoadingIcon className={styles.loader} /> :
-        label
-      }
+      <div
+        r-if={type === 'adding'}
+        className={`${styles.plus} relative mr-1`}
+      />
+      <LoadingIcon r-if={loading} className={styles.loader} />
+      <span r-else>{label}</span>
     </button>
   );
 };

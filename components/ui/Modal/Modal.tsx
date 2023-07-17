@@ -9,12 +9,11 @@ interface ModalProps extends PropsWithChildren {
 }
 
 export const Modal: React.FC<ModalProps> = ({ title, isOpen, className = '', children, onClose }) => {
-  if (!isOpen) {
-    return null;
-  }
-
   return (
-    <div className={`${styles.modal} flex-center`}>
+    <div
+      r-if={isOpen}
+      className={`${styles.modal} flex-center`}
+    >
       <div
         className={`${styles['modal-curtain']}`}
         onClick={() => onClose()}

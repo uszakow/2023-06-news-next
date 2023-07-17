@@ -15,18 +15,25 @@ export const Navbar: React.FC = () => {
   return (
     <nav className={`${styles.navbar} flex flex-justify-between px-3`}>
       <Link href='/' className={styles['navbar-item']}>Wiadomości</Link>
-      {user ?
-        <Dropdown title={<div className={`${styles['navbar-item']} ${styles['user-name']}`}>{user.name}</div>}>
-          <Link href='/profile' className="dropdown-item">Strona użytkownika</Link>
-          <button
-            className="dropdown-item"
-            onClick={() => logout()}
-          >
-            Wyloguj się
-          </button>
-        </Dropdown> :
-        <Link href='/login' className={styles['navbar-item']}>Zaloguj się</Link>
-      }
+
+      <Dropdown
+        r-if={user}
+        title={<div className={`${styles['navbar-item']} ${styles['user-name']}`}
+        >{user?.name}</div>}>
+        <Link href='/profile' className="dropdown-item">Strona użytkownika</Link>
+        <button
+          className="dropdown-item"
+          onClick={() => logout()}
+        >
+          Wyloguj się
+        </button>
+      </Dropdown>
+      <Link r-else
+        href='/login'
+        className={styles['navbar-item']}>
+        Zaloguj się
+      </Link>
+
     </nav>
   );
 };

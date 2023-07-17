@@ -23,30 +23,28 @@ export const Input: React.FC<InputProps> = ({ value, label, type = 'text', place
       className={`${styles.input} ${className}`}
       title={required ? 'To pole jest obowiązkowe' : ''}
     >
-      {label &&
-        <label htmlFor={label}>
-          {label}{required && ' *'}
-        </label>
-      }
-      {
-        type === 'textarea' ?
-          <textarea
-            id={label}
-            value={value}
-            placeholder={placeholder}
-            required={required}
-            rows={rowsCount}
-            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => handleChange(e.target.value)}
-          /> :
-          <input
-            id={label}
-            type={type}
-            value={value}
-            placeholder={placeholder}
-            required={required}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e.target.value)}
-          />
-      }
+      <label r-if={label} htmlFor={label}>
+        {label}{required && ' *'}
+      </label>
+
+      <textarea
+        r-if={type === 'textarea'}
+        id={label}
+        value={value}
+        placeholder={placeholder}
+        required={required}
+        rows={rowsCount}
+        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => handleChange(e.target.value)}
+      />
+      <input
+        r-else
+        id={label}
+        type={type}
+        value={value}
+        placeholder={placeholder}
+        required={required}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e.target.value)}
+      />
     </div>
   );
 };

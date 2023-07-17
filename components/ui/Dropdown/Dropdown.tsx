@@ -16,11 +16,9 @@ export const Dropdown: React.FC<DropdownProps> = ({ title, children }) => {
       onMouseOver={() => setIsOpen(true)}
       onMouseLeave={() => setIsOpen(false)}
     >
-      {typeof title === 'string' ?
-        <div className='title'>{title}</div> :
-        title
-      }
-
+      <div r-if={title === 'string'} className='title'>{title}</div>
+      <span r-else>{title}</span>
+      
       <div
         className={dropdownContentClasses}
         onClick={() => setIsOpen(false)}

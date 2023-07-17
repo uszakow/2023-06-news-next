@@ -31,14 +31,13 @@ const NewsListPage: React.FC<NewsListPageProps> = ({ initialNews }) => {
       <Head>
         <title>Wiadomości</title>
       </Head>
-      {news?.map(item => (
-        <NewsPreview
-          key={item.id}
-          news={item}
-          onNewsChange={() => updateNewsList()}
-        />
-      ))}
-      {user && <NewsAdd onNewsChange={() => updateNewsList()} />}
+      <NewsPreview
+        r-for="item in news"
+        r-key="item.id"
+        news={item}
+        onNewsChange={() => updateNewsList()}
+      />
+      <NewsAdd r-if={user} onNewsChange={() => updateNewsList()} />
     </>
   );
 };

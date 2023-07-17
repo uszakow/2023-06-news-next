@@ -96,27 +96,32 @@ export const NewsPreview: React.FC<NewsPreviewProps> = ({ news, onNewsChange }) 
         >
           {news.title}
         </Link>
-        {user?.id === news.author.id && (
-          <div className="flex">
-            <Button
-              type="inline"
-              label="Edytuj"
-              onClick={() => setIsEditNewsModalOpen(true)}
-            />
-            <Button
-              className="ml-2"
-              type="inline"
-              label="Usuń"
-              onClick={() => setIsDeleteNewsModalOpen(true)}
-            />
-          </div>
-        )}
+
+        <div
+          r-if={user?.id === news.author.id}
+          className="flex"
+        >
+          <Button
+            type="inline"
+            label="Edytuj"
+            onClick={() => setIsEditNewsModalOpen(true)}
+          />
+          <Button
+            className="ml-2"
+            type="inline"
+            label="Usuń"
+            onClick={() => setIsDeleteNewsModalOpen(true)}
+          />
+        </div>
       </Typography>
 
       <div className={styles['news-preview-content']}>
-        {content?.map((item, index) => (
-          <p key={index + item}>{item}</p>
-        ))}
+        <p
+          r-for="item in content"
+          r-key="item"
+        >
+          {item}
+        </p>
       </div>
 
       <NewsManageModal
@@ -145,7 +150,7 @@ export const NewsPreview: React.FC<NewsPreviewProps> = ({ news, onNewsChange }) 
           loading={loading}
           onClick={() => deleteNews()}
         />
-        {error && <ErrorMessage message={error} />}
+        <ErrorMessage r-if={error} message={error} />
       </Modal>
     </div>
   );

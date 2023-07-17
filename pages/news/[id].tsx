@@ -24,14 +24,13 @@ const NewsPage: React.FC<NewsPageProps> = ({ news }) => {
         <title>{news?.title || 'News app'}</title>
       </Head>
       <Typography type="title">{news?.title}</Typography>
-      {content?.map((item, index) => (
-        <p
-          key={index + item}
-          className="news-p"
-        >
-          {item}
-        </p>
-      ))}
+      <p
+        r-for="item in content"
+        r-key="item"
+        className="news-p"
+      >
+        {item}
+      </p>
 
       <div className="mt-2">
         Autor: <span className="author">{news?.author.name}</span>

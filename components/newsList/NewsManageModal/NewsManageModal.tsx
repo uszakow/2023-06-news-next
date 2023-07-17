@@ -46,7 +46,7 @@ export const NewsManageModal: React.FC<NewsModalProps> = ({ isOpen, modalTitle, 
         loading={loading}
         onClick={() => manageNews()}
       />
-      {error && <ErrorMessage message={error} />}
+      <ErrorMessage r-if={error} message={error} />
     </Modal>
   );
 };

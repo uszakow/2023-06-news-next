@@ -104,7 +104,7 @@ export const UserForm: React.FC = () => {
           onClick={activeTab === 'login' ? loginUser : createUser}
           loading={loading}
         />
-        {error && <ErrorMessage message={error} />}
+        <ErrorMessage r-if={error} message={error} />
       </div>
     </div>
   );

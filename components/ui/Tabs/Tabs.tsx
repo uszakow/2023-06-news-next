@@ -11,16 +11,15 @@ interface TabsProps {
 export const Tabs: React.FC<TabsProps> = ({ tabs, activeTab, className = '', onTabChange }) => {
   return (
     <nav className={`${styles.tabs} ${className}`}>
-      {tabs.map((tab) => (
-        <button
-          key={tab.id}
-          className={activeTab === tab.id ? styles.active : ''}
-          disabled={activeTab === tab.id}
-          onClick={() => onTabChange(tab.id)}
-        >
-          {tab.label}
-        </button>
-      ))}
+      <button
+        r-for="tab in tabs"
+        r-key="tab.id"
+        className={activeTab === tab.id ? styles.active : ''}
+        disabled={activeTab === tab.id}
+        onClick={() => onTabChange(tab.id)}
+      >
+        {tab.label}
+      </button>
     </nav>
   );
 };
